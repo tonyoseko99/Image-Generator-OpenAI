@@ -1,9 +1,10 @@
 from django.shortcuts import render
-from django.http import HttpResponse
 
 import requests
 import os
-import openai
+# import openai
+
+# openai.api_key = os.getenv("OPENAI_API_KEY")
 
 
 # Create your views here.
@@ -18,9 +19,12 @@ def image(request):
             'Authorization': 'Bearer ' + API_KEY
         },
         json={
-            "model": "text-davinci-003",
-            "prompt": "this is a test",
-            "temperature": 0,
-            "max_tokens": 7
+            "model": "image-alpha-001",
+            "prompt": "A cute baby sea otter wearing a beret",
+            "n": 2,
+            "size": "1024x1024",
+            'response_format': 'url'
         }
+        image_url = response.json()['data'][0]['url']
+        return render(request, 'myapp/image.html', {'image_url': image_url})
     )
