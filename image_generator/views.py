@@ -1,7 +1,10 @@
 import os
 import openai
 import requests
+
+from django.shortcuts import render, redirect
 from django.http import JsonResponse
+from .forms import ImageForm
 
 # set the API key as an environment variable
 os.environ["OPENAI_API_KEY"] = "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"
@@ -20,8 +23,13 @@ def generate_image(request):
 
     image_url = response['data'][0]['url']
    # Get the image URL from the response
-    JsonResponse({'image_url': image_url})
+    print(image_url)
 
     # render the image in the browser
-    return render(request, 'image_generator/templates/index.html', {'image_url': image_url})
+    return render(request, 'index.html', {'image_url': image_url})
 
+# view to handle form submission and validation
+def input_form(request):
+    if request.method == 'POST':
+        form = ImageForm(request.POST)
+        
