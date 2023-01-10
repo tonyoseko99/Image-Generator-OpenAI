@@ -6,9 +6,6 @@ from django.shortcuts import render, redirect
 from django.http import JsonResponse
 from .forms import ImageForm
 
-# set the API key as an environment variable
-os.environ["OPENAI_API_KEY"] = "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"
-
 # use the os.getenv() function to reference the API key
 openai.api_key = os.getenv("OPENAI_API_KEY")
 
@@ -32,4 +29,3 @@ def generate_image(request):
 def input_form(request):
     if request.method == 'POST':
         form = ImageForm(request.POST)
-        
