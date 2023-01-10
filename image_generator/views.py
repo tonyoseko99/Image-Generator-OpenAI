@@ -1,30 +1,30 @@
-from django.shortcuts import render
-
-import requests
 import os
-# import openai
+import openai
+import requests
+from django.http import JsonResponse
 
-# openai.api_key = os.getenv("OPENAI_API_KEY")
+# set the API key as an environment variable
+os.environ["OPENAI_API_KEY"] = "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"
+
+# use the os.getenv() function to reference the API key
+openai.api_key = os.getenv("OPENAI_API_KEY")
 
 
-# Create your views here.
-API_KEY = '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'
-
-
-def image(request):
-    response = requests.post(
-        'https://api.openai.com/v1/images/generations',
-        headers={
-            'Content-Type': 'application/json',
-            'Authorization': 'Bearer ' + API_KEY
-        },
-        json={
-            "model": "image-alpha-001",
-            "prompt": "A cute baby sea otter wearing a beret",
-            "n": 2,
-            "size": "1024x1024",
-            'response_format': 'url'
-        }
-        image_url = response.json()['data'][0]['url']
-        return render(request, 'myapp/image.html', {'image_url': image_url})
+def generate_image(request):
+    # Get the prompt from the request
+    prompt = "This is a picture of a dog."
+    # Generate the image
+    response = openai.Completion.create(
+        engine="davinci",
+        prompt=prompt,
+        temperature=0.9,
+        max_tokens=150,
+        top_p=1,
+        frequency_penalty=0,
+        presence_penalty=0.6,
+        stop=["\ Image URL:"],
     )
+    # Get the image URL from the response
+    image_url = response["choices"][0]["text"].split("Image URL: ")[1].strip()
+    # Return the image URL
+    return JsonResponse({"image_url": image_url})
