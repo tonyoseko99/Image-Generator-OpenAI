@@ -2,5 +2,5 @@ from django.urls import path
 from . import views
 
 urlpatterns = [
-    path('', views.generate_image, name='images'),
+    path('', views.handle_form_submission, name='images'),
 ]
