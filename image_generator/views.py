@@ -7,7 +7,7 @@ from django.http import JsonResponse
 from .forms import ImageForm
 
 # set the API key as an environment variable
-os.environ["OPENAI_API_KEY"] = ""
+os.environ["OPENAI_API_KEY"] = "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"
 
 # use the os.getenv() function to reference the API key
 openai.api_key = os.getenv("OPENAI_API_KEY")
