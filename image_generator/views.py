@@ -7,7 +7,7 @@ from django.http import JsonResponse
 from .forms import ImageForm
 
 # set the API key as an environment variable
-os.environ["OPENAI_API_KEY"] = "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"
+os.environ["OPENAI_API_KEY"] = "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"
 
 # use the os.getenv() function to reference the API key
 openai.api_key = os.getenv("OPENAI_API_KEY")
@@ -28,10 +28,10 @@ def handle_form_submission(request):
                 size=size
             )
 
-            image_url = response['data'][0]['url']
+            image_urls = [image['url'] for image in response['data']]
 
             # render the image in the browser
-            return render(request, 'form.html', {'image_url': image_url})
+            return render(request, 'form.html', {'image_url': image_urls, "description": prompt})
     else:
         form = ImageForm()
 
