@@ -8,7 +8,7 @@ from django.contrib import messages
 from .forms import ImageForm
 
 # set the API key as an environment variable
-os.environ["OPENAI_API_KEY"] = "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"
+os.environ["OPENAI_API_KEY"] = ""
 
 # use the os.getenv() function to reference the API key
 openai.api_key = os.getenv("OPENAI_API_KEY")
